@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Secure Zoho Survey</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      background-color: black;
+    }
+
+    iframe {
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+
+    #warning {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: yellow;
+      padding: 10px;
+      font-weight: bold;
+      display: none;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="warning">You switched tabs. Survey session ended.</div>
+
+  <iframe id="survey" src="https://survey.zohopublic.com/zs/JGDAzF"></iframe>
+
+  <script>
+    let redirected = false;
+
+    document.addEventListener('visibilitychange', function () {
+      if (document.hidden && !redirected) {
+        redirected = true;
+
+        // Option 1: Just redirect
+        window.location.href = "https://yourdomain.com/survey-ended.html";
+
+        // Option 2: Show warning then redirect (5 seconds)
+        /*
+        document.getElementById("warning").style.display = "block";
+        setTimeout(() => {
+          window.location.href = "https://yourdomain.com/survey-ended.html";
+        }, 5000);
+        */
+      }
+    });
+
+    // Try auto full-screen
+    window.onload = () => {
+      let el = document.documentElement;
+      if (el.requestFullscreen) el.requestFullscreen();
+    };
+  </script>
+</body>
+</html>
+
